@@ -2,8 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait ##from CO Pilot
+from selenium.webdriver.support import expected_conditions as EC ##from CO Pilot
 import time  
 
 # Setup Driver
@@ -14,7 +14,7 @@ driver = webdriver.Chrome(service=service)
 driver.get("https://www.schuur.ch/programm")
 time.sleep(5)  # Add a delay to allow the page to load completely
 wait = WebDriverWait(driver, 10)
-textElements = wait.until(EC.presence_of_all_elements_located((By.XPATH, "//meta[contains(@itemprop, 'performer')]")))
+textElements = wait.until(EC.presence_of_all_elements_located((By.XPATH, "//meta[contains(@itemprop, 'performer')]"))) ##EC.presence_of_all_elements_located from CO Pilot
 
 print(f"Gefundene Programmpunkte: {len(textElements)}")
 for element in textElements:
