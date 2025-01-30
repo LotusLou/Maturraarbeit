@@ -5,10 +5,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 from datetime import datetime
+from flask import Flask, render_template
 
 # Setup Driver
 service = Service(r"C:\Users\Lou\OneDrive - sluz\Maturaarbeit\Maturraarbeit\chromedriver.exe")
 driver = webdriver.Chrome(service=service)
+
+# Setup Flask
+app = Flask(__name__)
 
 # Open Website and find Title Elements
 driver.get("https://www.schuur.ch/programm")
@@ -22,13 +26,26 @@ print(f"Gefundene Programmpunkte: {len(titleElements)}")
 print(f"Gefundene Startdaten: {len(startdateElements)}")
 print(f"Gefundene Enddaten: {len(enddateElements)}")
 
-# Prints the title and date of each program point
+# Collect events data, list them in dictionaries and than to a list. so i got 1 dictionary for each event
+events = []
 for i in range(len(titleElements)):
     title = titleElements[i].get_attribute("content")
     startdate = startdateElements[i].get_attribute("content")
     enddate = enddateElements[i].get_attribute("content")
-    with open("index.html", "a", encoding="utf-8") as file:
-        file.write(f"<p>Programmpunkt {i+1}: {title} von {startdate} bis {enddate}</p>\n")
+    event = {
+        "title": title,
+        "startdate": startdate,
+        "enddate": enddate
+    }
+    events.append(event)
 
 # Close the driver
 driver.quit()
+
+# Setup Flask route
+@app.route("/")
+def index():
+    return render_template("index.html", events=events)
+
+if __name__ == "__main__":
+    app.run(debug=True)

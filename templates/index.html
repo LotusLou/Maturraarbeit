@@ -7,6 +7,10 @@
 </head>
 <body>
     <h1>Programm Schüür</h1>
-    <p></p>
+    <ul>{%for event in events %}
+        <h1>{{event.title}}</h1>
+        <p>{{event.startdate}}-{{event.enddate}}</p>
+    {%endfor%}
+    </ul>
 </body>
 </html>
