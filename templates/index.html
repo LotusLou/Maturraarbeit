@@ -3,9 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Was lauft?</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
+    <header>
+    <div class="menuleiste">
+        <div class="Homepagebutton">
+            <img src="" alt="">
+        </div>
+        <div class="Links">
+            <ul>
+                <p>Programm</p>
+                <p>About</p>
+                <p>Clubs</p>
+            </ul>
+        </div>
+    </div>
+    <div class="title">
+        <h1>Was lauft?</h1>
+    </div>
+    </header>
+    <main>
+    <ul> {%for event in events %} <!--For-Schleife von Flask welche die einzelenen Events erstellt.-->
+        <div class="Programmpunkt">
+            <img class="Bild_1" src="" alt="">
+            <h2 class="Programm_Titel">{{event.title}}</h2>
+            <button class="Link_Event"></button>
+            <p class="Datum">{{event.startdate}}</p>
+        </div>
+        {%endfor%}
+    </ul>
+    </main>
     <h1>Programm Schüür</h1>
     <ul>{%for event in events %}
         <h1>{{event.title}}</h1>
