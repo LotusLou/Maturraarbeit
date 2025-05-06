@@ -9,20 +9,18 @@
 <body>
     <header>
     <div class="menuleiste">
-        <div class="Homepagebutton">
-            <img src="" alt="">
-        </div>
+        <a class="homepagebutton" href="index.html"><img class="Logo" src="/static/imge/Lou Logo.png" alt="Logo"></a>
         <div class="Links">
             <ul>
-                <p>Programm</p>
-                <p>About</p>
-                <p>Clubs</p>
+                <a href="#programm">Programm</a>
+                <a href="#about">About</a>
+                <a href="#clubs">Clubs</a>
             </ul>
         </div>
     </div>
     <div class="title">
         <h1>Was lauft?</h1>
-    </div>
+    </div> 
     </header>
     <main>
     <ul> {%for event in events %} <!--For-Schleife von Flask welche die einzelenen Events erstellt.-->
