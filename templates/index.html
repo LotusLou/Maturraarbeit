@@ -9,12 +9,12 @@
 <body>
     <header>
     <div class="menuleiste">
-        <a class="homepagebutton" href="index.html"><img class="Logo" src="/static/imge/Lou Logo.png" alt="Logo"></a>
-        <div class="Links">
+        <a class="homepagebutton" href="index.html"><img class="logo" src="/static/imge/Lou Logo.png" alt="Logo"></a>
+        <div class="links">
             <ul>
-                <a href="#programm">Programm</a>
-                <a href="#about">About</a>
-                <a href="#clubs">Clubs</a>
+                <li><a href="#programm">Programm</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#clubs">Clubs</a></li>
             </ul>
         </div>
     </div>
@@ -23,15 +23,18 @@
     </div> 
     </header>
     <main>
-    <ul> {%for event in events %} <!--For-Schleife von Flask welche die einzelenen Events erstellt.-->
-        <div class="Programmpunkt">
-            <img class="Bild_1" src="" alt="">
-            <h2 class="Programm_Titel">{{event.title}}</h2>
-            <button class="Link_Event"></button>
-            <p class="Datum">{{event.startdate}}</p>
+    <h2 id="programm">Programm</h2>
+    <div class="programm-feed"> {%for event in events %} <!--For-Schleife von Flask welche die einzelenen Events erstellt.-->
+        <div class="programmpunkt">
+            <img class="bild_1" src="/static/imge/Lou Logo.png" alt="Logo">
+            <h3 class="Programm_Titel">{{event.title}}1</h3>
+            <button class="link_Event"></button>
+            <p class="datum">{{event.startdate}}</p>
         </div>
         {%endfor%}
-    </ul>
+    </div>
+    <h2 id="about">About</h2>
+    <h2 id="clubs">Clubs</h2>
     </main>
     <h1>Programm Schüür</h1>
     <ul>{%for event in events %}

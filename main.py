@@ -3,12 +3,13 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 from datetime import datetime
 from flask import Flask, render_template
 
 # Setup Driver
-service = Service(r"C:\Users\Lou\OneDrive - sluz\Maturaarbeit\Maturraarbeit\chromedriver.exe")
+service = Service(ChromeDriverManager().install()) # Automatisch Neuste Version installieren 
 driver = webdriver.Chrome(service=service)
 
 # Setup Flask
