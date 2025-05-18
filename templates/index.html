@@ -9,7 +9,7 @@
 <body>
     <header>
     <div class="menuleiste">
-        <a class="homepagebutton" href="index.html"><img class="logo" src="/static/imge/Lou Logo.png" alt="Logo"></a>
+        <a href="index.html"><img class="logo" src="/static/imge/Lou Logo.png" alt="Logo"></a>
         <div class="links">
             <ul>
                 <li><a href="#programm">Programm</a></li>
@@ -26,9 +26,9 @@
     <h2 id="programm">Programm</h2>
     <div class="programm-feed"> {%for event in events %} <!--For-Schleife von Flask welche die einzelenen Events erstellt.-->
         <div class="programmpunkt">
-            <img class="bild_1" src="/static/imge/Lou Logo.png" alt="Logo">
-            <h3 class="Programm_Titel">{{event.title}}1</h3>
-            <button class="link_Event"></button>
+            <img class="bild_1 bild-center" src="/static/imge/Lou Logo.png" alt="Logo">
+            <h3 class="programm-titel">{{event.title}}1</h3>
+            <a class="link-event"><img class="bild-plus" src="/static/imge/plus.png" alt="Weitere Info's"></a>
             <p class="datum">{{event.startdate}}</p>
         </div>
         {%endfor%}

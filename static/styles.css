@@ -7,11 +7,8 @@ body {
     background-color: black
 }
 .logo{
-    width: 60px;
-    padding: 10px;
-}
-.homepagebutton {
-    
+    width: 90px;
+    margin: 20px 20px;
 }
 header {
     background-color: rgb(0, 161, 255);
@@ -32,7 +29,7 @@ header {
 .links li{
     list-style: none;
 }
-a {
+.menuleiste a {
     color: white;
     font-size: 30px;
     text-decoration: none;
@@ -62,20 +59,47 @@ h2 {
 .programmpunkt {
     background-color: white;
     border-radius: 2%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    margin: 0 
+    padding: 25px;
+    margin: 0;
+    display: grid;
+    gap: 15px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
 }
 .bild_1 {
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
 }
-
+.bild-center {
+    grid-area: 1/1/2/3;
+    justify-self: center;
+}
+.programm-titel {
+    grid-column: 1 / span 2;
+    font-size: 28px; 
+}
+.link-event {
+    justify-self: end;
+}
+.bild-plus {
+    margin-top: 0px;
+    margin-right: 10px;
+    height: 60px;
+    width: 60px;
+}
+.datum {
+    justify-self: end;
+    grid-area: 3 / 3;
+    border: medium solid black;
+    padding: 2.5px 20px;  
+    border-radius: 5px;
+    margin-top: 20px;
+    background-color: rgb(0, 161, 255);
+}
 .programm-feed {
     display: grid;
     gap: 40px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     margin: 60px auto;
     padding: 0;
     max-width: 1200px; /*verhindert zu lange text ChatGPT*/
