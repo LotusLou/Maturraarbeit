@@ -7,40 +7,36 @@ from webdriver_manager.chrome import ChromeDriverManager
 import time 
 class baseScraper: 
 
-    def __init__(self, url, xpathTitel, xpathStartdate, xpathEnddate): #xpathimg
+    def __init__(self, url,): 
         self.url = url
-        self.xpathTitel = xpathTitel
-        self.xpathStartdate = xpathStartdate
-        self.xpathEnddate = xpathEnddate
-        ##self.xpathimg = xpathimg
         self.driver= self.setupDriver() #Chatgpt
     def setupDriver (self):
         service = Service(ChromeDriverManager().install()) # Automatisch Neuste Version installieren ChatGPT
         driver = webdriver.Chrome(service=service)
         return driver #Chatgpt
-    def driverGet (self):
+    def startDriver (self):
         if self.driver is None:#
-            raise RuntimeError("WebDriver is not initialized.")#
+            raise RuntimeError("WebDriver funktioniert nicht.")#
         self.driver.get(self.url)
-        time.sleep(3) 
+        time.sleep(3)
+    def findElement(self, Xpath):
         wait = WebDriverWait(self.driver, 10)
-        
-        titleElements = wait.until(EC.presence_of_all_elements_located((By.XPATH, self.xpathTitel)))
-        startdateElements = wait.until(EC.presence_of_all_elements_located((By.XPATH, self.xpathStartdate)))
-        enddateElements = wait.until(EC.presence_of_all_elements_located((By.XPATH, self.xpathEnddate)))
-
-        events = []
-        for i in range(len(titleElements)):
-            title = titleElements[i].get_attribute("content")
-            startdate = startdateElements[i].get_attribute("content")
-            enddate = enddateElements[i].get_attribute("content")
-            event = {
-                "title": title,
-                "startdate": startdate,
-                "enddate": enddate
-            }
-            events.append(event)
-        return events  ##
+        findElements = wait.until(EC.presence_of_all_elements_located((By.XPATH, Xpath)))
+        return findElements #ChatGPT
+    def findAllLinks(self, Xpath,):
+        base_url = self.url
+        Links = []
+        Linkselemente = self.findElement(Xpath)
+        for el in Linkselemente:
+            href = el.get_attribute("href")
+            if href:
+                # Wenn es ein relativer Link ist, Basis-URL hinzufügen ChatGPT
+                if href.startswith("/"):
+                    href = base_url + href
+                Links.append(href)
+        return Links
+    def scraper ():
+        pass
     def close(self):
         self.driver.quit()
 
