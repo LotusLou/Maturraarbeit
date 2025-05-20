@@ -40,7 +40,3 @@ class neubad(baseScraper):
             events.append(event)
         return events  ##
         self.close()
-neubad_scraper = neubad()  # Objekt erstellen
-events = neubad_scraper.scraper()  # Methode aufrufen und Events speichern
-for event in events:
-    print(event)

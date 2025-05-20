@@ -7,19 +7,26 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import time 
 
-# Definiere URL und XPaths für die Seite
-url = "https://www.bar59.ch/"
-xpath_title = "//div[@class='event']/h3/span[1]"
-xpath_start = "//div[@class='event']/h3/span[2]"
-xpath_end = "//div[@class='event']/h3/span[1]"
-
-scraper = baseScraper(url, xpath_title, xpath_start, xpath_end)
-try:
-    events = scraper.driverGet()
-except Exception as e:
-    print(f"Fehler beim Scrapen: {e}")
-    events = []
-
-for e in events:
-    print(e)
-scraper.close()
+class bar59(baseScraper):
+    
+    def __init__(self,):
+        super().__init__("https://www.bar59.ch/")
+    def scraper(self):
+        self.startDriver()
+        events = []
+        Title = self.findElement("//h3/span[1]")  
+        Date = self.findElement("//h3/parent::div/preceding-sibling::div/span[1]") 
+        for el in range(len(Title)):
+            title = Title[el].text
+            date = Date[el].text
+            events.append({
+                "title": title,
+                "startdate": date,
+                "link": self.url
+            })
+        self.close()
+        return events  ##
+bar59_scraper = bar59()  # Objekt erstellen
+events = bar59_scraper.scraper()  # Methode aufrufen und Events speichern
+for event in events:
+    print(event)
