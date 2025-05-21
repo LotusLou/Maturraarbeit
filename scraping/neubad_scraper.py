@@ -48,7 +48,7 @@ class neubad(baseScraper):
                     _, endtime = endtime.split(" ", 1)
             else:
                 endtime = ""
-            # Endtime ggf. auch als time-Objekt parsen
+            # Endtime auch als time-Objekt parsen
             try:
                 endtime_obj = datetime.strptime(endtime, "%H:%M:%S").time() if endtime else None
             except Exception:
