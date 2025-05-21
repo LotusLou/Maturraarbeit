@@ -15,6 +15,8 @@ db = SQLAlchemy()
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 db.init_app(app)
+
+
 #Aufbau der Datenbank
 class Event(db.Model):
     __tablename__= "events"
@@ -35,7 +37,6 @@ with app.app_context():
 def scrape_und_speichere():
     scraper = neubad()
     scraper.scraper(Event) 
-    print("🔍 Route wurde aufgerufen!")# führt das Scraping durch und speichert Event-Objekte in scraper.events
 
     # Alle Event-Objekte in DB schreiben
     for event in scraper.events:
@@ -44,5 +45,21 @@ def scrape_und_speichere():
     db.session.commit()
     return f"{len(scraper.events)} Events erfolgreich gespeichert!"
 
+@app.route("/events")
+def show_events():
+    events = Event.query.order_by(Event.date, Event.Starttime).all()
+    if events:
+        ausgabe= []
+        for event in events:
+            ausgabe.append({
+                "id": event.id,
+                "title": event.title,
+                "date": str(event.date) if event.date else "",
+                "Starttime": str(event.Starttime) if event.Starttime else "",
+                "Endtime": str(event.Endtime) if event.Endtime else ""
+            })
+        return render_template("index.html",events=ausgabe)
+    else:
+        return {"Konnten Keine Events geladen werden."}
 if (__name__ == "__main__"):
     app.run (debug=True)
