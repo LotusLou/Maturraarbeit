@@ -9,6 +9,8 @@ from datetime import datetime
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from scraping.neubad_scraper import neubad
+from scraping.sonstiges import today
+
 #Erstelle eine Datenbank als Objekt
 db = SQLAlchemy()
 
@@ -47,7 +49,8 @@ def scrape_und_speichere():
 
 @app.route("/events")
 def show_events():
-    events = Event.query.order_by(Event.date, Event.Starttime).all()
+    heute_date , heute_time = today()
+    events = Event.query.order_by(Event.date, Event.Starttime).filter(Event.date >= heute_date).filter(Event.Starttime >= heute_time).all()
     if events:
         ausgabe= []
         for event in events:

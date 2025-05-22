@@ -44,3 +44,9 @@ def neubad_datum(raw_string):
         time = "00:00:00"
     date_time = [date, time]
     return date_time
+import datetime
+def today():
+    heute_date_time = datetime.datetime.now()
+    heute_date = heute_date_time.date()
+    heute_time = heute_date_time.time().replace(microsecond= 0)
+    return heute_date, heute_time
