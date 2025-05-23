@@ -9,6 +9,7 @@ from datetime import datetime
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from scraping.neubad_scraper import neubad
+from scraping.schüür_scraper import schuur
 from scraping.sonstiges import today
 
 #Erstelle eine Datenbank als Objekt
@@ -27,6 +28,7 @@ class Event(db.Model):
     date = db.Column(db.Date)
     Starttime = db.Column(db.Time)
     Endtime = db.Column(db.Time)
+    #imgurl = db.Column(db.String)
 #ertellen der DatenBank
 with app.app_context():
     db.create_all()
@@ -36,7 +38,7 @@ with app.app_context():
 #    return render_template('test.html', test=test)
 
 @app.route("/scrape-neubad")
-def scrape_und_speichere():
+def scrape_und_speichere_1():
     scraper = neubad()
     scraper.scraper(Event) 
 
@@ -47,12 +49,24 @@ def scrape_und_speichere():
     db.session.commit()
     return f"{len(scraper.events)} Events erfolgreich gespeichert!"
 
+@app.route("/scrape-schuur")
+def scrape_und_speichere_2():
+    scraper = schuur()
+    scraper.scraper(Event) 
+    print("Gefundene Events (Schüür):", scraper.events)
+    # Alle Event-Objekte in DB schreiben
+    for event in scraper.events:
+        db.session.add(event)
+
+    db.session.commit()
+    return f"{len(scraper.events)} Events erfolgreich gespeichert!"
 @app.route("/events")
 def show_events():
-    heute_date , heute_time = today()
-    events = Event.query.order_by(Event.date, Event.Starttime).filter(Event.date >= heute_date).filter(Event.Starttime >= heute_time).all()
+    heute_date, heute_time = today()
+    # filtere Event nach aktualität (Heute und Zunkunft)
+    events = Event.query.all()#.order_by(Event.date, Event.Starttime).filter((Event.date > heute_date) | ((Event.date == heute_date) & (Event.Starttime >= heute_time)))
     if events:
-        ausgabe= []
+        ausgabe = []
         for event in events:
             ausgabe.append({
                 "id": event.id,
@@ -61,7 +75,7 @@ def show_events():
                 "Starttime": str(event.Starttime) if event.Starttime else "",
                 "Endtime": str(event.Endtime) if event.Endtime else ""
             })
-        return render_template("index.html",events=ausgabe)
+        return render_template("index.html", events=ausgabe)
     else:
         return {"Konnten Keine Events geladen werden."}
 if (__name__ == "__main__"):

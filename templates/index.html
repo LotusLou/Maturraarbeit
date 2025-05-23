@@ -27,7 +27,7 @@
     <div class="programm-feed"> {%for event in events %} <!--For-Schleife von Flask welche die einzelenen Events erstellt.-->
         <div class="programmpunkt">
             <img class="bild_1 bild-center" src="/static/imge/Lou Logo.png" alt="Logo">
-            <h3 class="programm-titel">{{event.title}}1</h3>
+            <h3 class="programm-titel">{{event.title}}</h3>
             <a class="link-event"><img class="bild-plus" src="/static/imge/plus.png" alt="Weitere Info's"></a>
             <p class="datum">{{event.date}}</p>
         </div>
@@ -36,11 +36,5 @@
     <h2 id="about">About</h2>
     <h2 id="clubs">Clubs</h2>
     </main>
-    <h1>Programm Schüür</h1>
-    <ul>{%for event in events %}
-        <h1>{{event.title}}</h1>
-        <p>{{event.startdate}}-{{event.enddate}}</p>
-    {%endfor%}
-    </ul>
 </body>
 </html>
