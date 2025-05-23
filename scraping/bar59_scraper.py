@@ -16,9 +16,9 @@ class bar59(baseScraper):
         self.events= []
     def scraper(self, Event):
         self.startDriver()
-        Title = self.findElement("//h3/span[1]")  
+        Title = self.findElement("//span[contains(@class, 'icon-club')]/parent::h3/span[1]")  
         Date = self.findElement("//h3/parent::div/preceding-sibling::div/span[1]")
-        Starttime = self.findElement("//h3/small[1]")
+        Starttime = self.findElement("//span[contains(@class, 'icon-club')]/parent::h3/small[1]")
         min_len = min(len(Title), len(Date), len(Starttime))  # Nur bis zur kleinsten Länge iterieren
         for el in range(min_len):
             title = Title[el].text
