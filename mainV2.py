@@ -12,6 +12,7 @@ from scraping.neubad_scraper import neubad
 from scraping.schüür_scraper import schuur
 from scraping.bar59_scraper import bar59
 from scraping.sonstiges import today
+from scraping.treibhaus_scraper import treibhaus
 
 #Erstelle eine Datenbank als Objekt
 db = SQLAlchemy()
@@ -42,11 +43,17 @@ with app.app_context():
 def scrape_und_speichere_1():
     scraper = neubad()
     scraper.scraper(Event) 
-
-    # Alle Event-Objekte in DB schreiben
     for event in scraper.events:
         db.session.add(event)
+    db.session.commit()
+    return f"{len(scraper.events)} Events erfolgreich gespeichert!"
 
+@app.route("/scrape-treibhaus")  
+def scrape_und_speichere_4():
+    scraper = treibhaus()
+    scraper.scraper(Event) 
+    for event in scraper.events:
+        db.session.add(event)
     db.session.commit()
     return f"{len(scraper.events)} Events erfolgreich gespeichert!"
 
@@ -92,5 +99,5 @@ def show_events():
         return render_template("index.html", events=ausgabe)
     else:
         return {"Konnten Keine Events geladen werden."}
-if (__name__ == "__main__"):
-    app.run (debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)

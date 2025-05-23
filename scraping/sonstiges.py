@@ -65,6 +65,25 @@ def bar59_datum(raw_string):
     return date_obj
 
 
+def treibhaus_datum(raw_string):
+    # Erwartet: "Mai 23, 2025 00:00" oder ähnlich
+    # Teile am Leerzeichen, um Monat, Tag, Jahr und ggf. Zeit zu extrahieren
+    parts = raw_string.replace(",", "").split()
+    if len(parts) < 3:
+        return None
+    month, day, year = parts[0], parts[1], parts[2]
+    m1 = {
+        "Januar": "01", "Februar": "02", "März": "03", "April": "04",
+        "Mai": "05", "Juni": "06", "Juli": "07", "August": "08",
+        "September": "09", "Oktober": "10", "November": "11", "Dezember": "12"
+    }
+    
+    date_str = f"{year}-{m1[month]}-{day.zfill(2)}" #zfill macht aus zb aus 3 -> 03 
+    date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+    return date_obj
+
+
+
 def today():
     heute_date_time = datetime.datetime.now()
     heute_date = heute_date_time.date()
