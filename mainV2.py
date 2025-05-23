@@ -13,6 +13,7 @@ from scraping.schüür_scraper import schuur
 from scraping.bar59_scraper import bar59
 from scraping.sonstiges import today
 from scraping.treibhaus_scraper import treibhaus
+from scraping.madeleine_scraper import madeleine
 
 #Erstelle eine Datenbank als Objekt
 db = SQLAlchemy()
@@ -42,6 +43,15 @@ with app.app_context():
 @app.route("/scrape-neubad")
 def scrape_und_speichere_1():
     scraper = neubad()
+    scraper.scraper(Event) 
+    for event in scraper.events:
+        db.session.add(event)
+    db.session.commit()
+    return f"{len(scraper.events)} Events erfolgreich gespeichert!"
+
+@app.route("/scrape-madeleine")
+def scrape_und_speichere_5():
+    scraper = madeleine()
     scraper.scraper(Event) 
     for event in scraper.events:
         db.session.add(event)

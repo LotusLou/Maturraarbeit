@@ -78,14 +78,33 @@ def treibhaus_datum(raw_string):
         "September": "09", "Oktober": "10", "November": "11", "Dezember": "12"
     }
     
-    date_str = f"{year}-{m1[month]}-{day.zfill(2)}" #zfill macht aus zb aus 3 -> 03 
+    date_str = f"{year}-{m1[month]}-{day.zfill(2)}" #zfill macht aus  zb aus 3 -> 03 
     date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
     return date_obj
 
+def madeleine_datum(rawstring):
+    #test_input = "24.05.2025 23:00 - 04:00 Uhr"
+    parts = rawstring.replace(" Uhr", "").replace("-", "").split()
+    day, month, year = parts[0].split(".")
+    date_str = f"{year}-{month}-{day.zfill(2)}"
+    date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+    time_str = parts[1]
+    endtime_str = parts[2]
 
+    try:
+        time_obj = datetime.datetime.strptime(time_str, "%H:%M").time() if time_str else None
+    except Exception:
+        time_obj = None
+    try:
+        endtime_obj = datetime.datetime.strptime(endtime_str, "%H:%M").time() if endtime_str else None
+    except Exception:
+        endtime_obj = None
+    return date_obj, time_obj, endtime_obj
 
 def today():
     heute_date_time = datetime.datetime.now()
     heute_date = heute_date_time.date()
     heute_time = heute_date_time.time().replace(microsecond=0)
     return heute_date, heute_time
+
+
