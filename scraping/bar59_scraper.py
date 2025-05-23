@@ -6,27 +6,29 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import time 
+from scraping.sonstiges import bar59_datum
+from datetime import datetime
 
 class bar59(baseScraper):
     
     def __init__(self,):
         super().__init__("https://www.bar59.ch/")
-    def scraper(self):
+        self.events= []
+    def scraper(self, Event):
         self.startDriver()
-        events = []
         Title = self.findElement("//h3/span[1]")  
-        Date = self.findElement("//h3/parent::div/preceding-sibling::div/span[1]") 
-        for el in range(len(Title)):
+        Date = self.findElement("//h3/parent::div/preceding-sibling::div/span[1]")
+        Starttime = self.findElement("//h3/small[1]")
+        min_len = min(len(Title), len(Date), len(Starttime))  # Nur bis zur kleinsten Länge iterieren
+        for el in range(min_len):
             title = Title[el].text
-            date = Date[el].text
-            events.append({
-                "title": title,
-                "startdate": date,
-                "link": self.url
-            })
+            date_str = Date[el].text
+            date_obj = bar59_datum(date_str)
+            time_str = Starttime[el].text
+            # Zeit-String in Python time-Objekt umwandeln
+            try:
+                time_obj = datetime.strptime(time_str, "%H:%M").time() if time_str else None
+            except Exception:
+                time_obj = None
+            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj))
         self.close()
-        return events  ##
-bar59_scraper = bar59()  # Objekt erstellen
-events = bar59_scraper.scraper()  # Methode aufrufen und Events speichern
-for event in events:
-    print(event)

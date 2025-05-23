@@ -10,6 +10,7 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from scraping.neubad_scraper import neubad
 from scraping.schüür_scraper import schuur
+from scraping.bar59_scraper import bar59
 from scraping.sonstiges import today
 
 #Erstelle eine Datenbank als Objekt
@@ -60,11 +61,24 @@ def scrape_und_speichere_2():
 
     db.session.commit()
     return f"{len(scraper.events)} Events erfolgreich gespeichert!"
+
+@app.route("/scrape-bar59")
+def scrape_und_speichere_3():
+    scraper = bar59()
+    scraper.scraper(Event) 
+    print("Gefundene Events (Bar59):", scraper.events)
+    # Alle Event-Objekte in DB schreiben
+    for event in scraper.events:
+        db.session.add(event)
+
+    db.session.commit()
+    return f"{len(scraper.events)} Events erfolgreich gespeichert!"
+
 @app.route("/events")
 def show_events():
     heute_date, heute_time = today()
     # filtere Event nach aktualität (Heute und Zunkunft)
-    events = Event.query.all()#.order_by(Event.date, Event.Starttime).filter((Event.date > heute_date) | ((Event.date == heute_date) & (Event.Starttime >= heute_time)))
+    events = Event.query.order_by(Event.date, Event.Starttime).filter((Event.date > heute_date) | ((Event.date == heute_date) & (Event.Starttime >= heute_time))).all()
     if events:
         ausgabe = []
         for event in events:

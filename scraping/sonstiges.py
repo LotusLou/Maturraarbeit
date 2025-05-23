@@ -57,28 +57,12 @@ def neubad_datum(raw_string):
     return date_time
 
 
-def schuur_datum(raw_string):
-    # 1. Wochentag entfernen (alles vor dem ersten Leerzeichen + Punkt)
-    parts = raw_string.split(". ", 1)
-    date_str = parts[1] if len(parts) > 1 else raw_string
-
-    m2 = {
-        "Januar": "01",
-        "Februar": "02",
-        "März": "03",
-        "April": "04",
-        "Mai": "05",
-        "Juni": "06",
-        "Juli": "07",
-        "August": "08",
-        "September": "09",
-        "Oktober": "10",
-        "November": "11",
-        "Dezember": "12",
-    }
-    date = datum_formatieren(date_str, m2)
-
-    return date
+def bar59_datum(raw_string):
+    parts = raw_string.split(" ")
+    day, month, year = parts[1].split(".")
+    date_str = f"{year}-{month}-{day}"
+    date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d").date() if date_str else None
+    return date_obj
 
 
 def today():
