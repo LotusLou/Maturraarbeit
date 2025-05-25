@@ -101,10 +101,28 @@ def madeleine_datum(rawstring):
         endtime_obj = None
     return date_obj, time_obj, endtime_obj
 
+def rok_datum(month, day, year):
+    month = month.strip()
+    day = day.strip()
+    m1 = {
+        "Januar": "01", "Februar": "02", "März": "03", "April": "04",
+        "Mai": "05", "Juni": "06", "Juli": "07", "August": "08",
+        "September": "09", "Oktober": "10", "November": "11", "Dezember": "12"
+    }
+    # Monat-String ggf. auf ersten Buchstaben groß, Rest klein normalisieren
+    month_norm = month.capitalize()
+    if month_norm not in m1:
+        # Fallback: gib None zurück, wenn der Monat nicht gefunden wird
+        return None
+    date_str = f"{year}-{m1[month_norm]}-{day.zfill(2)}"
+    date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+    return date_obj
 def today():
     heute_date_time = datetime.datetime.now()
     heute_date = heute_date_time.date()
     heute_time = heute_date_time.time().replace(microsecond=0)
     return heute_date, heute_time
+
+
 
 

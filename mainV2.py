@@ -14,6 +14,7 @@ from scraping.bar59_scraper import bar59
 from scraping.sonstiges import today
 from scraping.treibhaus_scraper import treibhaus
 from scraping.madeleine_scraper import madeleine
+from scraping.rok_scraper import rok
 
 #Erstelle eine Datenbank als Objekt
 db = SQLAlchemy()
@@ -88,6 +89,16 @@ def scrape_und_speichere_3():
     for event in scraper.events:
         db.session.add(event)
 
+    db.session.commit()
+    return f"{len(scraper.events)} Events erfolgreich gespeichert!"
+
+@app.route("/scrape-rok")
+def scrape_und_speichere_6():
+    scraper = rok()
+    scraper.scraper(Event)
+    print("Gefundene Events (ROK):", scraper.events)
+    for event in scraper.events:
+        db.session.add(event)
     db.session.commit()
     return f"{len(scraper.events)} Events erfolgreich gespeichert!"
 
