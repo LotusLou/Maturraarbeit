@@ -9,10 +9,6 @@ import time
 from selenium.common.exceptions import TimeoutException
 from datetime import datetime
 # Definiere URL und XPaths für die Seite
-url = "https://www.schuur.ch/programm"
-xpath_title = "//meta[contains(@itemprop, 'performer')]"
-xpath_start = "//meta[contains(@itemprop, 'startDate')]"
-xpath_end = "//meta[contains(@itemprop, 'endDate')]"
 
 class schuur(baseScraper):
     def __init__(self,):

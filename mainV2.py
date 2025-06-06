@@ -15,7 +15,7 @@ from scraping.sonstiges import today
 from scraping.treibhaus_scraper import treibhaus
 from scraping.madeleine_scraper import madeleine
 from scraping.rok_scraper import rok
-
+from scraping.südpol_scraper import sudpol
 #Erstelle eine Datenbank als Objekt
 db = SQLAlchemy()
 
@@ -95,6 +95,16 @@ def scrape_und_speichere_3():
 @app.route("/scrape-rok")
 def scrape_und_speichere_6():
     scraper = rok()
+    scraper.scraper(Event)
+    print("Gefundene Events (ROK):", scraper.events)
+    for event in scraper.events:
+        db.session.add(event)
+    db.session.commit()
+    return f"{len(scraper.events)} Events erfolgreich gespeichert!"
+
+@app.route("/scrape-sudpol")
+def scrape_und_speichere_7():
+    scraper = sudpol()
     scraper.scraper(Event)
     print("Gefundene Events (ROK):", scraper.events)
     for event in scraper.events:

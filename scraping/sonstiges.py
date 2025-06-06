@@ -117,12 +117,24 @@ def rok_datum(month, day, year):
     date_str = f"{year}-{m1[month_norm]}-{day.zfill(2)}"
     date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
     return date_obj
+def sudpol_datum(Date_Starttime):
+    #Beispiel Datum: Sa, 14.06.2025, 23:00
+    parts = Date_Starttime.split(", ")
+    day, month, year = parts[1].split(".")
+    date_str = f"{year}-{month}-{day.zfill(2)}"
+    date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+    time_str = parts[2]
+    try:
+        time_obj = datetime.datetime.strptime(time_str, "%H:%M").time() if time_str else None
+    except Exception:
+        time_obj = None
+    return date_obj, time_obj
+
 def today():
     heute_date_time = datetime.datetime.now()
     heute_date = heute_date_time.date()
     heute_time = heute_date_time.time().replace(microsecond=0)
     return heute_date, heute_time
-
 
 
 
