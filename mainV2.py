@@ -35,6 +35,11 @@ class Event(db.Model):
     date = db.Column(db.Date)
     Starttime = db.Column(db.Time)
     Endtime = db.Column(db.Time)
+    img = db.Column(db.String)
+    text = db.Column(db.String)
+    link = db.Column(db.String, nullable= False)
+    preis = db.Column(db.String)
+    club = db.Column(db.String, nullable= False)
     #imgurl = db.Column(db.String)
 #ertellen der DatenBank
 with app.app_context():
