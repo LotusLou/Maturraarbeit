@@ -38,7 +38,7 @@ class Event(db.Model):
     img = db.Column(db.String)
     text = db.Column(db.String)
     link = db.Column(db.String, nullable= False)
-    preis = db.Column(db.String)
+    preis = db.Column(db.Integer)
     club = db.Column(db.String, nullable= False)
     #imgurl = db.Column(db.String)
 #ertellen der DatenBank
