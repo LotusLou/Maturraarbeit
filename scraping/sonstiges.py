@@ -130,6 +130,17 @@ def sudpol_datum(Date_Starttime):
         time_obj = None
     return date_obj, time_obj
 
+def sedel_datum(date_time):
+    #Beispiel: 2025-06-07T20:00:00Z
+    date, time = date_time.split("T")
+    date_obj = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+    time_str = time.rsplit("Z")
+    time_obj = datetime.datetime.strptime(time_str[0], "%H:%M:%S").time() 
+    return date_obj, time_obj
+
+
+
+
 def today():
     heute_date_time = datetime.datetime.now()
     heute_date = heute_date_time.date()

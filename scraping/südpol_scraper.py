@@ -11,6 +11,7 @@ class sudpol(baseScraper):
         self.startDriver()
         eventLinks = self.findAllLinks("//li[contains(text(), 'Club')]/ancestor::a[1]")
         for Link in eventLinks:
+            self.driver.get(Link)
             Title = self.findElement("//h1/span[contains(@class, 'Heading__content')]")
             Date_Starttime = self.findElement("//span[contains(@class, 'EventInfos__date-day')]")
             title = Title[0].text if Title else ""

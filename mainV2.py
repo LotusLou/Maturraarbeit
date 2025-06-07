@@ -16,6 +16,8 @@ from scraping.treibhaus_scraper import treibhaus
 from scraping.madeleine_scraper import madeleine
 from scraping.rok_scraper import rok
 from scraping.südpol_scraper import sudpol
+from scraping.sedel_scraper import sedel
+
 #Erstelle eine Datenbank als Objekt
 db = SQLAlchemy()
 
@@ -106,7 +108,17 @@ def scrape_und_speichere_6():
 def scrape_und_speichere_7():
     scraper = sudpol()
     scraper.scraper(Event)
-    print("Gefundene Events (ROK):", scraper.events)
+    print("Gefundene Events (Sudpol):", scraper.events)
+    for event in scraper.events:
+        db.session.add(event)
+    db.session.commit()
+    return f"{len(scraper.events)} Events erfolgreich gespeichert!"
+
+@app.route("/scrape-sedel")
+def scrape_und_speichere_8():
+    scraper = sedel()
+    scraper.scraper(Event)
+    print("Gefundene Events (Sedel):", scraper.events)
     for event in scraper.events:
         db.session.add(event)
     db.session.commit()
