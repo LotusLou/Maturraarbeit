@@ -139,7 +139,14 @@ def sedel_datum(date_time):
     return date_obj, time_obj
 
 
-
+def schwarzeschaf_datum(date_str):
+        try:
+            # Entfernt alles, was kein Datum ist
+            clean = date_str.strip()
+            return datetime.datetime.strptime(clean, "%d.%m.%Y").date()
+        except Exception as e:
+            print(f" Fehler beim Parsen: {date_str} → {e}")
+            return None
 
 def today():
     heute_date_time = datetime.datetime.now()
