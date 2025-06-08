@@ -19,7 +19,7 @@ class sedel(baseScraper):
             date_time = Date_Starttime[0].get_attribute("datetime") if Date_Starttime else ""
             date_obj, time_obj = sedel_datum(date_time)
             endtime_obj = None  # Sedel hat kein Enddatum
-            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj, Endtime=endtime_obj))
+            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj, Endtime=endtime_obj, link="https://www.sedel.ch/",club="Sedel"))
         self.close()
 
 

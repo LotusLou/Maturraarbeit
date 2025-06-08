@@ -18,7 +18,7 @@ class sudpol(baseScraper):
             date_time = Date_Starttime[0].text if Date_Starttime else ""
             date_obj, time_obj = sudpol_datum(date_time)
             endtime_obj = None  # Südpol hat kein Enddatum
-            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj, Endtime=endtime_obj))
+            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj, Endtime=endtime_obj, club="Südpol", link="https://www.sudpol.ch/programm"))
         self.close()
 
 
