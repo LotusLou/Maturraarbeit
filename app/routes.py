@@ -1,13 +1,6 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
-import time
+from flask import Blueprint, render_template
+from .models import Event
 from datetime import datetime
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
 from scraping.neubad_scraper import neubad
 from scraping.schüür_scraper import schuur
 from scraping.bar59_scraper import bar59
@@ -18,13 +11,9 @@ from scraping.rok_scraper import rok
 from scraping.südpol_scraper import sudpol
 from scraping.sedel_scraper import sedel
 from scraping.schwarzeschaf_scraper import schwarzeschaf
+from .models import db, Event
 
-#Erstelle eine Datenbank als Objekt
-db = SQLAlchemy()
-
-app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
-db.init_app(app)
+main = Blueprint('main', __name__)
 
 def scrapeundSpeichere(Club):
     #Scraper Objekt wird erstellt
@@ -38,74 +27,52 @@ def scrapeundSpeichere(Club):
     db.session.commit()
     return f"{len(scraper.events)}"
 
-#Aufbau der Datenbank
-class Event(db.Model):
-    __tablename__= "events"
-    id = db.Column(db.Integer, primary_key= True)
-    title = db.Column(db.String, nullable= False)
-    date = db.Column(db.Date)
-    Starttime = db.Column(db.Time)
-    Endtime = db.Column(db.Time)
-    img = db.Column(db.String)
-    text = db.Column(db.String)
-    link = db.Column(db.String, nullable= False)
-    preis = db.Column(db.String)
-    club = db.Column(db.String, nullable= False)
-    #imgurl = db.Column(db.String)
-#ertellen der DatenBank
-with app.app_context():
-    db.create_all()
-
-#@app.route("/")
-#def homepage():
-#    return render_template('test.html', test=test)
-
-@app.route("/scrape-neubad")
+@main.route("/scrape-neubad")
 def scrape_und_speichere_1():
     anzahl = scrapeundSpeichere(neubad)
     return f"{anzahl} Events erfolgreich gespeichert!"
 
-@app.route("/scrape-madeleine")
+@main.route("/scrape-madeleine")
 def scrape_und_speichere_2():
     anzahl = scrapeundSpeichere(madeleine)
     return f"{len(anzahl)} Events erfolgreich gespeichert!"
 
-@app.route("/scrape-treibhaus")  
+@main.route("/scrape-treibhaus")  
 def scrape_und_speichere_3():
     anzahl = scrapeundSpeichere(treibhaus)
     return f"{len(anzahl)} Events erfolgreich gespeichert!"
 
-@app.route("/scrape-schuur")
+@main.route("/scrape-schuur")
 def scrape_und_speichere_4():
     anzahl = scrapeundSpeichere(schuur)
     return f"{len(anzahl)} Events erfolgreich gespeichert!"
 
-@app.route("/scrape-bar59")
+@main.route("/scrape-bar59")
 def scrape_und_speichere_5():
     anzahl = scrapeundSpeichere(bar59)
     return f"{len(anzahl)} Events erfolgreich gespeichert!"
 
-@app.route("/scrape-rok")
+@main.route("/scrape-rok")
 def scrape_und_speichere_6():
     anzahl = scrapeundSpeichere(rok)
     return f"{len(anzahl)} Events erfolgreich gespeichert!"
 
-@app.route("/scrape-sudpol")
+@main.route("/scrape-sudpol")
 def scrape_und_speichere_7():
     anzahl = scrapeundSpeichere(sudpol)
     return f"{len(anzahl)} Events erfolgreich gespeichert!"
 
-@app.route("/scrape-sedel")
+@main.route("/scrape-sedel")
 def scrape_und_speichere_8():
     anzahl = scrapeundSpeichere(sedel)
     return f"{len(anzahl)} Events erfolgreich gespeichert!"
 
-@app.route("/scrape-schwarzeschaf")
+@main.route("/scrape-schwarzeschaf")
 def scrape_und_speichere_9():
     anzahl = scrapeundSpeichere(schwarzeschaf)
     return f"{len(anzahl)} Events erfolgreich gespeichert!"
 
-@app.route("/events")
+@main.route("/events")
 def show_events():
     heute_date, heute_time = today()
     # filtere Event nach aktualität (Heute und Zunkunft)
@@ -123,5 +90,3 @@ def show_events():
         return render_template("index.html", events=ausgabe)
     else:
         return {"Konnten Keine Events geladen werden."}
-if __name__ == "__main__":
-    app.run(debug=True)
