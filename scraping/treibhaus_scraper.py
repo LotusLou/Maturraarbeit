@@ -16,7 +16,13 @@ class treibhaus(baseScraper):
             self.driver.get(link)
             Title = self.findElement("//h1[1]")
             Date = self.findElement("//time")
+            Img = self.findElement("//img")
             time_el = self.findElement("/html/body/div[3]/main/div[1]/div/div/div/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[2]")
+            try:
+                Preis = self.findElement("//span[contains(text(), 'CHF')]")
+                preis = Preis[0].text
+            except TimeoutException:
+                preis = ["Gratis"]
             try:
                 endtime_el = self.findElement("/html/body/div[3]/main/div[1]/div/div/div/div[2]/div[1]/div[1]/table/tbody/tr[2]/td[2]")
             except TimeoutException:
@@ -25,6 +31,7 @@ class treibhaus(baseScraper):
             date = Date[0].get_attribute("datetime") if Date else ""
             date_obj = treibhaus_datum(date)
             time_str = time_el[0].text if time_el else ""
+            img = Img[0].get_attribute("src") if Img else ""
             try:
                 time_obj = datetime.strptime(time_str, "%H:%M").time() if time_str else None
             except Exception:
@@ -34,6 +41,6 @@ class treibhaus(baseScraper):
                 endtime_obj = datetime.strptime(endtime_str, "%H:%M").time() if endtime_str else None
             except Exception:
                 endtime_obj = None
-            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj, Endtime=endtime_obj))
+            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj, Endtime=endtime_obj, preis=preis, link="https://www.treibhausluzern.ch/programm", club= "Treibhaus", img=img,))
         self.close()
 
