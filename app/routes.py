@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template
 from .models import Event
-from datetime import datetime
 from scraping.neubad_scraper import neubad
 from scraping.schüür_scraper import schuur
 from scraping.bar59_scraper import bar59
@@ -11,21 +10,9 @@ from scraping.rok_scraper import rok
 from scraping.südpol_scraper import sudpol
 from scraping.sedel_scraper import sedel
 from scraping.schwarzeschaf_scraper import schwarzeschaf
-from .models import db, Event
+from helper.db_helper import scrapeundSpeichere
 
 main = Blueprint('main', __name__)
-
-def scrapeundSpeichere(Club):
-    #Scraper Objekt wird erstellt
-    scraper = Club()
-    #Scraper Sucht die Daten und ertellt Datensätze
-    scraper.scraper(Event) 
-    # Alle Event-Objekte in DB schreiben
-    for event in scraper.events:
-        db.session.add(event)
-    
-    db.session.commit()
-    return f"{len(scraper.events)}"
 
 @main.route("/scrape-neubad")
 def scrape_und_speichere_1():
