@@ -26,6 +26,17 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 db.init_app(app)
 
+def scrapeundSpeichere(Club):
+    #Scraper Objekt wird erstellt
+    scraper = Club()
+    #Scraper Sucht die Daten und ertellt Datensätze
+    scraper.scraper(Event) 
+    # Alle Event-Objekte in DB schreiben
+    for event in scraper.events:
+        db.session.add(event)
+    
+    db.session.commit()
+    return f"{len(scraper.events)}"
 
 #Aufbau der Datenbank
 class Event(db.Model):
@@ -38,7 +49,7 @@ class Event(db.Model):
     img = db.Column(db.String)
     text = db.Column(db.String)
     link = db.Column(db.String, nullable= False)
-    preis = db.Column(db.Integer)
+    preis = db.Column(db.String)
     club = db.Column(db.String, nullable= False)
     #imgurl = db.Column(db.String)
 #ertellen der DatenBank
@@ -51,94 +62,48 @@ with app.app_context():
 
 @app.route("/scrape-neubad")
 def scrape_und_speichere_1():
-    scraper = neubad()
-    scraper.scraper(Event) 
-    for event in scraper.events:
-        db.session.add(event)
-    db.session.commit()
-    return f"{len(scraper.events)} Events erfolgreich gespeichert!"
+    anzahl = scrapeundSpeichere(neubad)
+    return f"{anzahl} Events erfolgreich gespeichert!"
 
 @app.route("/scrape-madeleine")
-def scrape_und_speichere_5():
-    scraper = madeleine()
-    scraper.scraper(Event) 
-    for event in scraper.events:
-        db.session.add(event)
-    db.session.commit()
-    return f"{len(scraper.events)} Events erfolgreich gespeichert!"
+def scrape_und_speichere_2():
+    anzahl = scrapeundSpeichere(madeleine)
+    return f"{len(anzahl)} Events erfolgreich gespeichert!"
 
 @app.route("/scrape-treibhaus")  
-def scrape_und_speichere_4():
-    scraper = treibhaus()
-    scraper.scraper(Event) 
-    for event in scraper.events:
-        db.session.add(event)
-    db.session.commit()
-    return f"{len(scraper.events)} Events erfolgreich gespeichert!"
+def scrape_und_speichere_3():
+    anzahl = scrapeundSpeichere(treibhaus)
+    return f"{len(anzahl)} Events erfolgreich gespeichert!"
 
 @app.route("/scrape-schuur")
-def scrape_und_speichere_2():
-    scraper = schuur()
-    scraper.scraper(Event) 
-    print("Gefundene Events (Schüür):", scraper.events)
-    # Alle Event-Objekte in DB schreiben
-    for event in scraper.events:
-        db.session.add(event)
-
-    db.session.commit()
-    return f"{len(scraper.events)} Events erfolgreich gespeichert!"
+def scrape_und_speichere_4():
+    anzahl = scrapeundSpeichere(schuur)
+    return f"{len(anzahl)} Events erfolgreich gespeichert!"
 
 @app.route("/scrape-bar59")
-def scrape_und_speichere_3():
-    scraper = bar59()
-    scraper.scraper(Event) 
-    print("Gefundene Events (Bar59):", scraper.events)
-    # Alle Event-Objekte in DB schreiben
-    for event in scraper.events:
-        db.session.add(event)
-
-    db.session.commit()
-    return f"{len(scraper.events)} Events erfolgreich gespeichert!"
+def scrape_und_speichere_5():
+    anzahl = scrapeundSpeichere(bar59)
+    return f"{len(anzahl)} Events erfolgreich gespeichert!"
 
 @app.route("/scrape-rok")
 def scrape_und_speichere_6():
-    scraper = rok()
-    scraper.scraper(Event)
-    print("Gefundene Events (ROK):", scraper.events)
-    for event in scraper.events:
-        db.session.add(event)
-    db.session.commit()
-    return f"{len(scraper.events)} Events erfolgreich gespeichert!"
+    anzahl = scrapeundSpeichere(rok)
+    return f"{len(anzahl)} Events erfolgreich gespeichert!"
 
 @app.route("/scrape-sudpol")
 def scrape_und_speichere_7():
-    scraper = sudpol()
-    scraper.scraper(Event)
-    print("Gefundene Events (Sudpol):", scraper.events)
-    for event in scraper.events:
-        db.session.add(event)
-    db.session.commit()
-    return f"{len(scraper.events)} Events erfolgreich gespeichert!"
+    anzahl = scrapeundSpeichere(sudpol)
+    return f"{len(anzahl)} Events erfolgreich gespeichert!"
 
 @app.route("/scrape-sedel")
 def scrape_und_speichere_8():
-    scraper = sedel()
-    scraper.scraper(Event)
-    print("Gefundene Events (Sedel):", scraper.events)
-    for event in scraper.events:
-        db.session.add(event)
-    db.session.commit()
-    return f"{len(scraper.events)} Events erfolgreich gespeichert!"
+    anzahl = scrapeundSpeichere(sedel)
+    return f"{len(anzahl)} Events erfolgreich gespeichert!"
 
 @app.route("/scrape-schwarzeschaf")
 def scrape_und_speichere_9():
-    scraper = schwarzeschaf()
-    scraper.scraper(Event)
-    print("Gefundene Events (Schwarze Schaf):", scraper.events)
-    for event in scraper.events:
-        db.session.add(event)
-    db.session.commit()
-    return f"{len(scraper.events)} Events erfolgreich gespeichert!"
+    anzahl = scrapeundSpeichere(schwarzeschaf)
+    return f"{len(anzahl)} Events erfolgreich gespeichert!"
 
 @app.route("/events")
 def show_events():
