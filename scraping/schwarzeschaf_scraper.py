@@ -40,5 +40,7 @@ class schwarzeschaf(baseScraper):
                     title=titles[el],
                     date=date_obj, 
                     Starttime=datetime.strptime("22:00", "%H:%M").time(),
-                    Endtime=datetime.strptime("04:00", "%H:%M").time(),))
+                    Endtime=datetime.strptime("04:00", "%H:%M").time(),
+                    club="Das schwarze Schaf",
+                    link="https://www.dasschwarzeschaf.ch/programm"))
         self.close()

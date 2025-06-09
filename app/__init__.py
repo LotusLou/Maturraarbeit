@@ -10,6 +10,6 @@ def flaskapp():
     with app.app_context():
         from . import routes
         db.create_all()
-        app.register_blueprint(routes.main)
+        app.register_blueprint(main)
 
     return app 

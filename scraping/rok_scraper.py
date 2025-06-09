@@ -41,6 +41,6 @@ class rok(baseScraper):
                 time_obj = datetime.strptime(time_str[1], "%H:%M").time() if len(time_str) > 1 and time_str[1] else None
             except Exception:
                 time_obj = None
-            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj,))
+            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj, club="Rok", link="https://www.rokklub.ch/programm"))
         self.close()
 

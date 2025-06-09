@@ -11,6 +11,7 @@ from scraping.südpol_scraper import sudpol
 from scraping.sedel_scraper import sedel
 from scraping.schwarzeschaf_scraper import schwarzeschaf
 from app.helper.db_helper import scrapeundSpeichere
+from app.helper.scrape_helper import scrape_all
 
 main = Blueprint('main', __name__)
 
@@ -57,6 +58,11 @@ def scrape_und_speichere_8():
 @main.route("/scrape-schwarzeschaf")
 def scrape_und_speichere_9():
     anzahl = scrapeundSpeichere(schwarzeschaf)
+    return f"{anzahl} Events erfolgreich gespeichert!"
+
+@main.route("/scrape-all")
+def scrapeall():
+    anzahl = scrape_all()
     return f"{anzahl} Events erfolgreich gespeichert!"
 
 @main.route("/events")
