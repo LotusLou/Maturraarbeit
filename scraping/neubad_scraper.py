@@ -53,6 +53,6 @@ class neubad(baseScraper):
                 endtime_obj = datetime.strptime(endtime, "%H:%M:%S").time() if endtime else None
             except Exception:
                 endtime_obj = None
-            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj, Endtime=endtime_obj))
+            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj, Endtime=endtime_obj, club="Neubad" , link = "https://neubad.org/veranstaltungen"))
         self.close()
         #return events  ##
