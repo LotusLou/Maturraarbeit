@@ -33,14 +33,18 @@ class rok(baseScraper):
             self.driver.get(link)
             Title = self.findElement("//h1")
             time_el = self.findElement("//h2")
+            Text = self.findElement("//p")
             date_obj = rok_datum(month_str[i], day_str[i], year)
             title = Title[0].text if Title else ""
             time_raw = time_el[0].text if time_el else ""
+            img = "https://www.rokklub.ch/_bilder/_default/rokklub_logo.svg"
+            text = Text[0].text if Text else ""
+
             try:
                 time_str = time_raw.split(" - ")
                 time_obj = datetime.strptime(time_str[1], "%H:%M").time() if len(time_str) > 1 and time_str[1] else None
             except Exception:
                 time_obj = None
-            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj, club="Rok", link="https://www.rokklub.ch/programm"))
+            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj, img=img, text=text, club="Rok", link="https://www.rokklub.ch/programm"))
         self.close()
 
