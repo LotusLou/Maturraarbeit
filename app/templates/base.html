@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Was lauft?{% endblock %}</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+    <div class="menuleiste">
+        <a href="{{ url_for('main.show_events') }}"><img class="logo" src="/static/imge/Lou Logo.png" alt="Logo"></a>
+        <div class="links">
+            <ul>
+                <li><a href="{{ url_for('main.programm')}}">Programm</a></li>
+                <li><a href="{{ url_for('main.about')}}">About</a></li>
+                <li><a href="{{ url_for('main.about')}}">Clubs</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="title">
+        {% block head_title %}
+        <h1>Was lauft?</h1>
+        {% endblock %}
+    </div> 
+    </header>
+    <main>
+        {% block content%}
+        <!--hier wird der Seiten inhalt eingefügt. -->
+        {% endblock %}
+    </main>
+</body>
+</html>

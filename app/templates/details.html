@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %} Programmpunkt -  {% endblock %}
+
+{% block content%}
+<h2 id="programm">Programm</h2>
+    <div class="programm-feed"> {%for event in events %} <!--For-Schleife von Flask welche die einzelenen Events erstellt.-->
+        <div class="programmpunkt">
+            <img class="bild_1 bild-center" src="/static/imge/Lou Logo.png" alt="Logo">
+            <h3 class="programm-titel">{{event.title}}</h3>
+            <a class="link-event"><img class="bild-plus" src="/static/imge/plus.png" alt="Weitere Info's"></a>
+            <p class="datum">{{event.date}}</p>
+        </div>
+        {%endfor%}
+    </div>
+{% endblock %}
