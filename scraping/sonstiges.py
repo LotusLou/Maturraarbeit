@@ -192,7 +192,7 @@ def schwarzeschaf_datum(date_str):
             return None
 
 def today():
-    heute_date_time = datetime.datetime.now()
+    heute_date_time = datetime.now()
     heute_date = heute_date_time.date()
     heute_time = heute_date_time.time().replace(microsecond=0)
     return heute_date, heute_time
