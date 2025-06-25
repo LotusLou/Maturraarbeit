@@ -108,7 +108,7 @@ def bar59_datum(raw_string):
     return date_obj
 
 
-def treibhaus_datum(raw_string):
+def treibhaus_datum(raw_string, time_str, endtime_el):
     # Erwartet: "Mai 23, 2025 00:00" oder ähnlich
     # Teile am Leerzeichen, um Monat, Tag, Jahr und ggf. Zeit zu extrahieren
     parts = raw_string.replace(",", "").split()
@@ -123,7 +123,16 @@ def treibhaus_datum(raw_string):
     
     date_str = f"{year}-{m1[month]}-{day.zfill(2)}" #zfill macht aus  zb aus 3 -> 03 
     date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
-    return date_obj
+    try:
+        time_obj = datetime.strptime(time_str, "%H:%M").time() if time_str else None
+    except Exception:
+        time_obj = None
+        endtime_str = endtime_el[0].text if endtime_el else ""
+    try:
+        endtime_obj = datetime.strptime(endtime_str, "%H:%M").time() if endtime_str else None
+    except Exception:
+        endtime_obj = None
+    return date_obj, time_obj, endtime_obj
 
 def madeleine_datum(rawstring):
     #test_input = "24.05.2025 23:00 - 04:00 Uhr"

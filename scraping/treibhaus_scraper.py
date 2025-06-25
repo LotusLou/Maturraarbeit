@@ -31,18 +31,9 @@ class treibhaus(baseScraper):
             text = Text[0].text if Text else ""
             title = Title[0].text if Title else ""
             date = Date[0].get_attribute("datetime") if Date else ""
-            date_obj = treibhaus_datum(date)
             time_str = time_el[0].text if time_el else ""
             img = Img[0].get_attribute("src") if Img else ""
-            try:
-                time_obj = datetime.strptime(time_str, "%H:%M").time() if time_str else None
-            except Exception:
-                time_obj = None
-            endtime_str = endtime_el[0].text if endtime_el else ""
-            try:
-                endtime_obj = datetime.strptime(endtime_str, "%H:%M").time() if endtime_str else None
-            except Exception:
-                endtime_obj = None
+            date_obj, time_obj, endtime_obj = treibhaus_datum(date, time_str , endtime_el)
             self.events.append(Event(title=title, date=date_obj, Starttime=time_obj, Endtime=endtime_obj, preis=preis, text=text ,link="https://www.treibhausluzern.ch/programm", club= "Treibhaus", img=img,))
         self.close()
 
