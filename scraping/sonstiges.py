@@ -191,6 +191,17 @@ def schwarzeschaf_datum(date_str):
             print(f" Fehler beim Parsen: {date_str} → {e}")
             return None
 
+def schwarzeschafe_titel(Title, Title2 ):
+    Title_single = Title 
+    Title_block2 = Title2[-2]  # vorletztes Element
+    Title_block3 = Title2[-1]  # letztes Element
+    raw_block = [el.text.strip() for el in Title_single if el.text.strip()]
+    raw_block2 = Title_block2.text
+    raw_block3 = Title_block3.text
+    split_block2 = [t.strip() for t in raw_block2.split("\n") if t.strip()] #\n steht für zeilen umbruch so kann man beim zeilen umbruch spliten 
+    split_block3 = [t.strip() for t in raw_block3.split("\n") if t.strip()]
+    titles = raw_block + split_block2 + split_block3 # alle Titel in eine Liste einfügen
+    return (titles)
 def today():
     heute_date_time = datetime.now()
     heute_date = heute_date_time.date()
