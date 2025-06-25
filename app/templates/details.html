@@ -1,15 +1,34 @@
 {% extends "base.html" %}
-{% block title %} Programmpunkt -  {% endblock %}
+{% block title %} Programmpunkt - {{event.title}} {% endblock %}
 
 {% block content%}
-<h2 id="programm">Programm</h2>
-    <div class="programm-feed"> {%for event in events %} <!--For-Schleife von Flask welche die einzelenen Events erstellt.-->
-        <div class="programmpunkt">
-            <img class="bild_1 bild-center" src="/static/imge/Lou Logo.png" alt="Logo">
-            <h3 class="programm-titel">{{event.title}}</h3>
-            <a class="link-event"><img class="bild-plus" src="/static/imge/plus.png" alt="Weitere Info's"></a>
-            <p class="datum">{{event.date}}</p>
-        </div>
-        {%endfor%}
+<div class="programmpunkt-details">
+    <div class="programm-bild"> 
+        <img src="{{event.img}}" alt="Bild">
     </div>
+    <div class="details karte">
+        <div>
+            <ul class="colum-1">
+                <li>Datum:</li>
+                <li>Start:</li>
+                <li>Ort:</li>
+                <li>Preis:</li>
+                <li>Clubseite:</li>
+            </ul>
+        </div>
+        <div>
+            <ul>
+                <li>{{event.date}}</li>
+                <li>{{event.Starttime}}</li>
+                <li>{{event.club}}</li>
+                <li>{{event.preis}}</li>
+                <li><a href="{{event.link}}">{{event.club}}</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="beschreib karte">
+        <h3>Event:</h3>
+        <p>{{event.text}}</p>
+    </div>
+</div>
 {% endblock %}

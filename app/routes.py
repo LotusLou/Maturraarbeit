@@ -82,7 +82,8 @@ def show_events():
                 "img": str(event.img) if event.img else "",
                 "preis" : str(event.preis) if event.preis else "",
                 "link" : str(event.link) if event.link else "",
-                "club" : str(event.club) if event.club else ""
+                "club" : str(event.club) if event.club else "",
+                "text" : str(event.text) if event.text else ""
                 })
         return render_template("index1.html", events=ausgabe)
     else:

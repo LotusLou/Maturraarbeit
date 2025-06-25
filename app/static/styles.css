@@ -1,6 +1,9 @@
 * {
     box-sizing: border-box; /*allgemein damit die paddings nicht sich selber aufblassen.*/
 }
+html, body {
+    overflow-x: hidden;
+}
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
@@ -35,7 +38,7 @@ header {
     text-decoration: none;
     padding-right: 60px;
 }
-a:visited {
+.menuleiste a:visited {
     color: white;
     text-decoration: none;
 }
@@ -64,44 +67,120 @@ h2 {
     display: grid;
     gap: 15px;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
+    grid-template-rows: auto 3px 10px auto 10px auto;
+    width: 100%;
+    max-width: 100%;
+}
+.trennlinie{
+    background-color: black;
+    grid-column: 1 / span 2;
+    width: 100%;
+    height: 3px;
+}
+.titel-zeile {
+    display: flex;
+    justify-content: space-between;
+    grid-column: 1 / span 2;
+    align-items: center;
+    min-height: 60px;
+}
+.leerschlag {
+    grid-column: 1/span 2;
+    height: 10px;
 }
 .bild_1 {
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height: 250px; 
+    object-fit: cover;
+    display: block;
 }
 .bild-center {
-    grid-area: 1/1/2/3;
+    grid-column: 1 / span 2;
     justify-self: center;
 }
 .programm-titel {
-    grid-column: 1 / span 2;
-    font-size: 28px; 
+    font-size: 26px; 
+    max-height: 60px;
+    margin: 0;
 }
 .link-event {
     justify-self: end;
 }
 .bild-plus {
-    margin-top: 0px;
-    margin-right: 10px;
     height: 60px;
     width: 60px;
 }
 .datum {
     justify-self: end;
-    grid-area: 3 / 3;
-    border: medium solid black;
-    padding: 2.5px 20px;  
-    border-radius: 5px;
-    margin-top: 20px;
+    grid-column: 1 / span 2;
+    align-self: end;
+    padding: 4px 15px;
     background-color: rgb(0, 161, 255);
+    color: black;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 2px solid black;
+    margin-top: auto;
 }
 .programm-feed {
     display: grid;
     gap: 40px;
     grid-template-columns: 1fr 1fr 1fr;
-    margin: 60px auto;
+    margin: 0px 5% 0px 5%;
     padding: 0;
-    max-width: 1200px; /*verhindert zu lange text ChatGPT*/
+    border: medium solid red;
+    max-width: 100vw; /*verhindert zu lange text ChatGPT*/
+    width: 90%;
+    box-sizing: border-box;
 }
+.programmpunkt-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+.programm-bild{
+    padding: 25px;
+    display: flex;
+}
+.programm-bild img{
+    width: 550px;
+    height: 450px;
+    justify-self: center;
+}
+.karte {
+    background-color: white;
+    border-radius: 2%;
+    padding: 25px;
+    margin: 25px;
+}
+.beschreib{
+    grid-row-start: 2;
+    grid-column: 1 / span 2;
 
+}
+h3{
+    text-align: center;
+    font-size: 30px;
+}
+.beschreib p{
+    text-align: justify;
+    text-align-last: left;
+    font-size: 20px;
+}
+.details {
+    display: flex;
+}
+.details ul{
+    list-style: none;
+    font-size: 30px;
+}
+.colum-1 li{
+    text-transform: uppercase; 
+    font-weight: bold;
+}
+.details li{
+    margin-bottom: 20px;
+}
+.details a{
+    text-decoration: none;
+} 
