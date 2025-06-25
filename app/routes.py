@@ -11,6 +11,7 @@ from scraping.südpol_scraper import sudpol
 from scraping.sedel_scraper import sedel
 from scraping.schwarzeschaf_scraper import schwarzeschaf
 from app.helper.db_helper import scrapeundSpeichere
+from app.helper.scrape_helper import scrape_all
 
 main = Blueprint('main', __name__)
 
@@ -59,7 +60,12 @@ def scrape_und_speichere_9():
     anzahl = scrapeundSpeichere(schwarzeschaf)
     return f"{anzahl} Events erfolgreich gespeichert!"
 
-@main.route("/events")
+@main.route("/scrape-all")
+def scrapeall():
+    anzahl = scrape_all()
+    return f"{anzahl} Events erfolgreich gespeichert!"
+
+@main.route("/")
 def show_events():
     heute_date, heute_time = today()
     # filtere Event nach aktualität (Heute und Zunkunft)
@@ -72,8 +78,23 @@ def show_events():
                 "title": event.title,
                 "date": str(event.date) if event.date else "",
                 "Starttime": str(event.Starttime) if event.Starttime else "",
-                "Endtime": str(event.Endtime) if event.Endtime else ""
-            })
-        return render_template("index.html", events=ausgabe)
+                "Endtime": str(event.Endtime) if event.Endtime else "",
+                "img": str(event.img) if event.img else "",
+                "preis" : str(event.preis) if event.preis else "",
+                "link" : str(event.link) if event.link else "",
+                "club" : str(event.club) if event.club else "",
+                "text" : str(event.text) if event.text else ""
+                })
+        return render_template("index1.html", events=ausgabe)
     else:
         return {"Konnten Keine Events geladen werden."}
+@main.route("/programm/<int:event_id>")
+def event_details(event_id):
+    event = Event.query.get_or_404(event_id)
+    return render_template("details.html", event=event)
+@main.route("/programm")
+def programm():
+    return render_template("programm.html")
+@main.route("/about")
+def about():
+    return render_template("about.html")

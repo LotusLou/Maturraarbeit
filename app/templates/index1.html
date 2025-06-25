@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Startseite - Was lauft? {% endblock %}
+
+{% block content%}
+<h2 id="programm">Programm</h2>
+    <div class="programm-feed"> {%for event in events %} <!--For-Schleife von Flask welche die einzelenen Events erstellt.-->
+        <div class="programmpunkt">
+            <img class="bild_1 bild-center" src="{{event.img}}" alt="Logo">
+            <div class="trennlinie"></div>
+            <div class="leerschlag"></div>
+            <div class="titel-zeile">
+                <h3 class="programm-titel">{{event.title}}</h3>
+                <a href="{{ url_for('main.event_details', event_id=event.id) }}" class="link-event">
+                    <img class="bild-plus" src="/static/imge/plus.png" alt="Weitere Info's">
+                </a>
+            </div>
+            <div class="leerschlag"></div>
+            <p class="datum">{{event.date}}</p>
+        </div>
+        {%endfor%}
+    </div>
+{% endblock %}
