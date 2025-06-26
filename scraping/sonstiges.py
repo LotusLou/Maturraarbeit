@@ -211,6 +211,22 @@ def schwarzeschafe_titel(Title, Title2 ):
     split_block3 = [t.strip() for t in raw_block3.split("\n") if t.strip()]
     titles = raw_block + split_block2 + split_block3 # alle Titel in eine Liste einfügen
     return (titles)
+
+def schuur_datum(startdate, enddate):
+    date_str, time_str = startdate.split("T")
+    date_obj = datetime.strptime(date_str, "%Y-%m-%d").date() if date_str else None
+    time_obj = datetime.strptime(time_str, "%H:%M").time() if time_str else None
+
+    if enddate:
+        endtime_str = enddate.replace(date_str + "T", "")
+    try:
+        endtime_obj = datetime.strptime(endtime_str, "%H:%M").time()
+    except Exception:
+        endtime_obj = None
+    else:
+        endtime_obj = None
+    return date_obj, time_obj, endtime_obj
+
 def today():
     heute_date_time = datetime.now()
     heute_date = heute_date_time.date()
