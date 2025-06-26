@@ -14,14 +14,13 @@ class bar59(baseScraper):
         Starttime = self.findElement("//span[contains(@class, 'icon-club')]/parent::h3/small[1]")
         Img = self.findElement("//span[contains(@class, 'icon-club')]/parent::h3/following-sibling::div//img")
         Text = self.findElement("//span[contains(@class, 'icon-club')]/parent::h3/following-sibling::div//img/following-sibling::div")
-        #Beschreib = self.findElement("")
         min_len = min(len(Title), len(Date), len(Starttime))  # Nur bis zur kleinsten Länge iterieren
         for el in range(min_len):
             title = Title[el].text
             date_str = Date[el].text
             date_obj = bar59_datum(date_str)
             time_str = Starttime[el].text
-            text = Text[el].get_attribute("innerText")
+            text = Text[el].text if Text else ""
             img = Img[el].get_attribute("src")
             # Zeit-String in Python time-Objekt umwandeln
             try:

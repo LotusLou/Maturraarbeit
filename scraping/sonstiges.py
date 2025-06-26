@@ -108,7 +108,7 @@ def bar59_datum(raw_string):
     return date_obj
 
 
-def treibhaus_datum(raw_string):
+def treibhaus_datum(raw_string, time_str, endtime_el):
     # Erwartet: "Mai 23, 2025 00:00" oder ähnlich
     # Teile am Leerzeichen, um Monat, Tag, Jahr und ggf. Zeit zu extrahieren
     parts = raw_string.replace(",", "").split()
@@ -123,7 +123,16 @@ def treibhaus_datum(raw_string):
     
     date_str = f"{year}-{m1[month]}-{day.zfill(2)}" #zfill macht aus  zb aus 3 -> 03 
     date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
-    return date_obj
+    try:
+        time_obj = datetime.strptime(time_str, "%H:%M").time() if time_str else None
+    except Exception:
+        time_obj = None
+        endtime_str = endtime_el[0].text if endtime_el else ""
+    try:
+        endtime_obj = datetime.strptime(endtime_str, "%H:%M").time() if endtime_str else None
+    except Exception:
+        endtime_obj = None
+    return date_obj, time_obj, endtime_obj
 
 def madeleine_datum(rawstring):
     #test_input = "24.05.2025 23:00 - 04:00 Uhr"
@@ -190,6 +199,33 @@ def schwarzeschaf_datum(date_str):
         except Exception as e:
             print(f" Fehler beim Parsen: {date_str} → {e}")
             return None
+
+def schwarzeschafe_titel(Title, Title2 ):
+    Title_single = Title 
+    Title_block2 = Title2[-2]  # vorletztes Element
+    Title_block3 = Title2[-1]  # letztes Element
+    raw_block = [el.text.strip() for el in Title_single if el.text.strip()]
+    raw_block2 = Title_block2.text
+    raw_block3 = Title_block3.text
+    split_block2 = [t.strip() for t in raw_block2.split("\n") if t.strip()] #\n steht für zeilen umbruch so kann man beim zeilen umbruch spliten 
+    split_block3 = [t.strip() for t in raw_block3.split("\n") if t.strip()]
+    titles = raw_block + split_block2 + split_block3 # alle Titel in eine Liste einfügen
+    return (titles)
+
+def schuur_datum(startdate, enddate):
+    date_str, time_str = startdate.split("T")
+    date_obj = datetime.strptime(date_str, "%Y-%m-%d").date() if date_str else None
+    time_obj = datetime.strptime(time_str, "%H:%M").time() if time_str else None
+
+    if enddate:
+        endtime_str = enddate.replace(date_str + "T", "")
+    try:
+        endtime_obj = datetime.strptime(endtime_str, "%H:%M").time()
+    except Exception:
+        endtime_obj = None
+    else:
+        endtime_obj = None
+    return date_obj, time_obj, endtime_obj
 
 def today():
     heute_date_time = datetime.now()

@@ -17,6 +17,7 @@ class treibhaus(baseScraper):
             Title = self.findElement("//h1[1]")
             Date = self.findElement("//time")
             Img = self.findElement("//img")
+            Text = self.findElement("//div[contains(@class, 'prose js-force-target-blank')]")
             time_el = self.findElement("/html/body/div[3]/main/div[1]/div/div/div/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[2]")
             try:
                 Preis = self.findElement("//span[contains(text(), 'CHF')]")
@@ -27,20 +28,12 @@ class treibhaus(baseScraper):
                 endtime_el = self.findElement("/html/body/div[3]/main/div[1]/div/div/div/div[2]/div[1]/div[1]/table/tbody/tr[2]/td[2]")
             except TimeoutException:
                 endtime_el = []
+            text = Text[0].text if Text else ""
             title = Title[0].text if Title else ""
             date = Date[0].get_attribute("datetime") if Date else ""
-            date_obj = treibhaus_datum(date)
             time_str = time_el[0].text if time_el else ""
             img = Img[0].get_attribute("src") if Img else ""
-            try:
-                time_obj = datetime.strptime(time_str, "%H:%M").time() if time_str else None
-            except Exception:
-                time_obj = None
-            endtime_str = endtime_el[0].text if endtime_el else ""
-            try:
-                endtime_obj = datetime.strptime(endtime_str, "%H:%M").time() if endtime_str else None
-            except Exception:
-                endtime_obj = None
-            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj, Endtime=endtime_obj, preis=preis, link="https://www.treibhausluzern.ch/programm", club= "Treibhaus", img=img,))
+            date_obj, time_obj, endtime_obj = treibhaus_datum(date, time_str , endtime_el)
+            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj, Endtime=endtime_obj, preis=preis, text=text ,link="https://www.treibhausluzern.ch/programm", club= "Treibhaus", img=img,))
         self.close()
 
