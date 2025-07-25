@@ -4,6 +4,10 @@
 
 {% block content%}
 <h2 id="programm">Programm</h2>
+<div class="suchleiste"> 
+    <img class="icon-lupe" src="/static/imge/icon-lupe.png" alt="Lupe">
+    <input class="suchinhalt" type="text" placeholder="Suche Events..." name="q" hx-get="/search" hx-trigger="keyup changed delay:500ms" hx-target="#resultate"></input>
+</div>
     <div class="programm-feed"> {%for event in events %} <!--For-Schleife von Flask welche die einzelenen Events erstellt.-->
         <div class="programmpunkt">
             <img class="bild_1 bild-center" src="{{event.img}}" alt="Logo">

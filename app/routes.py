@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 from .models import Event
 from scraping.neubad_scraper import neubad
 from scraping.schüür_scraper import schuur
@@ -95,6 +95,16 @@ def event_details(event_id):
 @main.route("/programm")
 def programm():
     return render_template("programm.html")
+@main.route("/search")
+def search():
+    heute_date, heute_time = today()
+    q = request.args.get("q")
+    print(q)
+    if q:
+        resultate = Event.query.order_by(Event.date, Event.Starttime).filter((Event.date > heute_date) | ((Event.date == heute_date) & (Event.Starttime >= heute_time))).filter(Event.title.contains(q)).limit(10).all()
+    else:
+        resultate = []
+    return render_template("suchresultate.html", resultate = resultate)
 @main.route("/about")
 def about():
     return render_template("about.html")

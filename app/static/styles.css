@@ -59,6 +59,51 @@ h2 {
     font-size: 40px;
     padding-top: 30px;
 }
+.suchleiste {
+    background-color: white;
+    width: 60%;
+    height: 60px;
+    justify-self: center;
+    margin-bottom: 2.5%;
+    border-radius: 15px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+.icon-lupe{
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+}
+.suchinhalt{
+    flex: 1; /* nimmt den gesamten restlichen Platz ein */
+    border: none;
+    outline: none;
+    font-size: 20px;
+}
+.table-results {
+    background-color: white;
+    width: 60%;
+    margin-bottom: 2.5%;
+    border-radius: 15px;
+    padding: 10px;
+    justify-self: center;
+}
+th {
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+.suchlinks {
+    text-decoration: none;
+    color: black;
+}
+.suchlinks:visited {
+    color: black;
+    text-decoration: none;
+}
+td {
+    font-size: 20px;
+}
 .programmpunkt {
     background-color: white;
     border-radius: 2%;

@@ -4,4 +4,20 @@
 {% block head_title %} <h1>Programm</h1> {% endblock %}
 
 {% block content%}
+<h2></h2>
+<div>
+<div class="suchleiste"> 
+    <img class="icon-lupe" src="/static/imge/icon-lupe.png" alt="Lupe">
+    <input class="suchinhalt" type="text" placeholder="Suche Events..." name="q" hx-get="/search" hx-trigger="keyup changed delay:500ms" hx-target="#resultate"></input>
+</div>
+<table class="table-results">
+    <thead>
+        <tr>
+            <th>Event</th>
+            <th>Datum</th>
+        </tr>
+    </thead>
+    <tbody id="resultate">
+    </tbody>
+</table>
 {% endblock %}

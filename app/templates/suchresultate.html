@@ -1,0 +1,6 @@
+{% for resultat in resultate %}
+<tr>
+    <td><a class="suchlinks" href="{{ url_for('main.event_details', event_id=resultat.id) }}">{{ resultat.title }}</a></td>
+    <td>{{ resultat.date }}</td>
+</tr>
+{% endfor %}
