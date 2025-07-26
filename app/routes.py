@@ -108,3 +108,6 @@ def search():
 @main.route("/about")
 def about():
     return render_template("about.html")
+@main.route("/clubs")
+def clubs():
+    return render_template("clubs.html")

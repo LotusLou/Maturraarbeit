@@ -173,7 +173,6 @@ td {
     grid-template-columns: 1fr 1fr 1fr;
     margin: 0px 5% 0px 5%;
     padding: 0;
-    border: medium solid red;
     max-width: 100vw; /*verhindert zu lange text ChatGPT*/
     width: 90%;
     box-sizing: border-box;
