@@ -199,8 +199,21 @@ def schwarzeschaf_datum(date_str):
         except Exception as e:
             print(f" Fehler beim Parsen: {date_str} → {e}")
             return None
-
-def schwarzeschafe_titel(Title, Title2 ):
+def schwarzeschafe_titel (Title):
+    title_single = Title[0] #erster Titel 
+    title_block = Title[1] #erster Block ohne titel 1 
+    title_block2 = Title[2] #zweiter Block
+    title_block3 = Title[3] #dritter Block
+    raw_title_single = title_single.text
+    raw_block = title_block.text
+    raw_block2 = title_block2.text
+    raw_block3 = title_block3.text
+    split_block = [t.strip() for t in raw_block.split("\n") if t.strip()]
+    split_block2 = [t.strip() for t in raw_block2.split("\n") if t.strip()] #\n steht für zeilen umbruch so kann man beim zeilen umbruch spliten 
+    split_block3 = [t.strip() for t in raw_block3.split("\n") if t.strip()]
+    titles = [raw_title_single] + split_block + split_block2 + split_block3
+    return (titles)
+def schwarzeschafe_titelV2(Title, Title2 ):
     Title_single = Title 
     Title_block2 = Title2[-2]  # vorletztes Element
     Title_block3 = Title2[-1]  # letztes Element

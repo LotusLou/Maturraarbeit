@@ -11,11 +11,10 @@ class schwarzeschaf(baseScraper):
         self.events= []
     def scraper(self, Event):
         self.startDriver()
-        Title = self.findElement("//div[contains(@data-testid, 'mesh-container-content')]/div[2]/h4/span/span/span/span/span")
         Title2 = self.findElement("//div[contains(@data-testid, 'mesh-container-content')]/div[2]/h4/span")
         Date = self.findElement("//span[contains(text(), '202')]")
         # Titel Formatieren:
-        titles = schwarzeschafe_titel(Title, Title2)
+        titles = schwarzeschafe_titel(Title2)
 
         # Datum Formatieren mit Regex:
         dates = []
@@ -28,5 +27,5 @@ class schwarzeschaf(baseScraper):
         for el in range(min_len):
             date_obj = schwarzeschaf_datum(dates[el])
             if date_obj:
-                self.events.append(Event(title=titles[el], date=date_obj, Starttime=datetime.strptime("22:00", "%H:%M").time(), Endtime=datetime.strptime("04:00", "%H:%M").time(), club="Das schwarze Schaf", link="https://www.dasschwarzeschaf.ch/programm"))
+                self.events.append(Event(title=titles[el], date=date_obj, Starttime=datetime.strptime("22:00", "%H:%M").time(), Endtime=datetime.strptime("04:00", "%H:%M").time(), img="https://i.pinimg.com/736x/dc/47/23/dc4723738dd4f691a290a1625b8ca4c9.jpg", club="Das schwarze Schaf", link="https://www.dasschwarzeschaf.ch/programm"))
         self.close()

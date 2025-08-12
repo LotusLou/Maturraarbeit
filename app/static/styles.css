@@ -101,6 +101,9 @@ th {
     color: black;
     text-decoration: none;
 }
+.suchlinks:hover {
+    color: rgb(168, 165, 165);
+}
 td {
     font-size: 20px;
 }
@@ -227,4 +230,8 @@ h3{
 }
 .details a{
     text-decoration: none;
+    color: black;
 } 
+.details a:hover{
+    color: rgb(59, 59, 59);
+}

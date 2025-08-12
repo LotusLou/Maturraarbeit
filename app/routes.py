@@ -69,7 +69,8 @@ def scrapeall():
 def show_events():
     heute_date, heute_time = today()
     # filtere Event nach aktualität (Heute und Zunkunft)
-    events = Event.query.order_by(Event.date, Event.Starttime).filter((Event.date > heute_date) | ((Event.date == heute_date) & (Event.Starttime >= heute_time))).all()
+    events = Event.query.order_by(Event.date, Event.Starttime)\
+        .filter((Event.date > heute_date) | ((Event.date == heute_date) & (Event.Starttime >= heute_time))).all()
     if events:
         ausgabe = []
         for event in events:
@@ -101,7 +102,9 @@ def search():
     q = request.args.get("q")
     print(q)
     if q:
-        resultate = Event.query.order_by(Event.date, Event.Starttime).filter((Event.date > heute_date) | ((Event.date == heute_date) & (Event.Starttime >= heute_time))).filter(Event.title.contains(q)).limit(10).all()
+        resultate = Event.query.order_by(Event.date, Event.Starttime)\
+            .filter((Event.date > heute_date) | ((Event.date == heute_date) & (Event.Starttime >= heute_time)))\
+                .filter(Event.title.contains(q)).limit(10).all()
     else:
         resultate = []
     return render_template("suchresultate.html", resultate = resultate)
