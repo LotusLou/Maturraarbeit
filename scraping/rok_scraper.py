@@ -1,7 +1,7 @@
 from scraping.basescraper import baseScraper
 from selenium.common.exceptions import TimeoutException
 from scraping.sonstiges import rok_datum
-from datetime import datetime
+from datetime import datetime, date 
 
 
 class rok(baseScraper):
@@ -15,9 +15,9 @@ class rok(baseScraper):
         day_str = []
         # suche alle Links zusammen 
         eventLinks = self.findAllLinks("//ul[contains(@class, 'list-events')]//a")
-        month = self.findElement("//*[contains(@class, 'month')]")
-        day = self.findElement("//*[contains(@class, 'weekdate')]")
-        year = "2025"
+        month = self.findElement("//div[contains(@class, 'month')]")
+        day = self.findElement("//div[contains(@class, 'weekdate')]")
+        year = str(date.today().year)
         # Fülle Listen mit den Textwerten
         month_str = [m.text.strip() for m in month]
         day_str = [d.text.strip() for d in day]

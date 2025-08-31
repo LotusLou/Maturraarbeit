@@ -79,19 +79,19 @@ def show_events():
                 "title": event.title,
                 "date": str(event.date) if event.date else "",
                 "Starttime": str(event.Starttime) if event.Starttime else "",
-                "Endtime": str(event.Endtime) if event.Endtime else "",
+                "Endtime": str(event.Endtime) if event.Endtime else "Keine Angaben",
                 "img": str(event.img) if event.img else "",
-                "preis" : str(event.preis) if event.preis else "",
+                "preis" : str(event.preis) if event.preis else "Keine Angaben",
                 "link" : str(event.link) if event.link else "",
                 "club" : str(event.club) if event.club else "",
-                "text" : str(event.text) if event.text else ""
+                "text" : str(event.text) if event.text else "Kein Textbeschreib gefunden"
                 })
         return render_template("index1.html", events=ausgabe)
     else:
         return {"Konnten Keine Events geladen werden."}
-@main.route("/programm/<int:event_id>")
+@main.route("/programm/<int:event_id>") #ChatGPT
 def event_details(event_id):
-    event = Event.query.get_or_404(event_id)
+    event = Event.query.get_or_404(event_id) #ChatGPT
     return render_template("details.html", event=event)
 @main.route("/programm")
 def programm():
@@ -104,7 +104,7 @@ def search():
     if q:
         resultate = Event.query.order_by(Event.date, Event.Starttime)\
             .filter((Event.date > heute_date) | ((Event.date == heute_date) & (Event.Starttime >= heute_time)))\
-                .filter(Event.title.contains(q)).limit(10).all()
+                .filter((Event.title.contains(q)) | (Event.club.contains(q))).limit(10).all()
     else:
         resultate = []
     return render_template("suchresultate.html", resultate = resultate)

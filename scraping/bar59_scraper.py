@@ -20,12 +20,12 @@ class bar59(baseScraper):
             date_str = Date[el].text
             date_obj = bar59_datum(date_str)
             time_str = Starttime[el].text
-            text = Text[el].text if Text else ""
+            text = Text[el].get_attribute("innerText") if Text else ""
             img = Img[el].get_attribute("src")
             # Zeit-String in Python time-Objekt umwandeln
             try:
                 time_obj = datetime.strptime(time_str, "%H:%M").time() if time_str else None
             except Exception:
                 time_obj = None
-            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj, club="Bar59", link="https://www.bar59.ch/",img = img, text=text))
+            self.events.append(Event(title=title, date=date_obj, Starttime=time_obj, club="Bar59", link="https://www.bar59.ch/",img = img, text=text, preis="keine Angaben"))
         self.close()
