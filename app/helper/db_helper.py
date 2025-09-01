@@ -1,5 +1,5 @@
 from app.models import db, Event
-
+#Gesammelte Events aussortieren nach Doppelten Einträgen und abspeichern.
 def scrapeundSpeichere(Club):
     #Scraper Objekt wird erstellt
     scraper = Club()

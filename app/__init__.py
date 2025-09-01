@@ -1,15 +1,15 @@
 from flask import Flask
 from .models import db
 from .routes import main
-#erstellung von Flask
+#Erstellung des Flaskobjektes 
 def flaskapp():
     app = Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
     db.init_app(app)
-#erstellt die Datenbank
-    with app.app_context():
-        from . import routes
-        db.create_all()
-        app.register_blueprint(main)
+
+    with app.app_context(): #Zeile ist von ChatGPT
+        from . import routes #Verbindung mit den Flask Routes 
+        db.create_all() #Erstellt die Datenbank, wenn keine vorhanden ist 
+        app.register_blueprint(main) #Zeile ist von ChatGPT
 
     return app 

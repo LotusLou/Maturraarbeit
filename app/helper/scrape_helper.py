@@ -9,6 +9,7 @@ from scraping.südpol_scraper import sudpol
 from scraping.sedel_scraper import sedel
 from scraping.schwarzeschaf_scraper import schwarzeschaf
 
+#Funktion um alle Clubseiten gleichzeitig abzuspeichern. 
 def scrape_all():
     anzahl= 0
     anzahl += scrapeundSpeichere(neubad)

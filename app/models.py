@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 
-#Datenbank objekt erstellt
+#Datenbank objekt erstellt 
 db = SQLAlchemy()
 #Definiert den Aufbau der Datenbank
 class Event(db.Model):

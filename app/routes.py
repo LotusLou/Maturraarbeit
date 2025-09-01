@@ -15,62 +15,74 @@ from app.helper.scrape_helper import scrape_all
 
 main = Blueprint('main', __name__)
 
+#Route für scrapen vom Neubad
 @main.route("/scrape-neubad")
 def scrape_und_speichere_1():
     anzahl = scrapeundSpeichere(neubad)
     return f"{anzahl} Events erfolgreich gespeichert!"
 
+#Route für scrapen vom Madeleine
 @main.route("/scrape-madeleine")
 def scrape_und_speichere_2():
     anzahl = scrapeundSpeichere(madeleine)
     return f"{anzahl} Events erfolgreich gespeichert!"
 
+#Route für scrapen vom Treibhaus
 @main.route("/scrape-treibhaus")  
 def scrape_und_speichere_3():
     anzahl = scrapeundSpeichere(treibhaus)
     return f"{anzahl} Events erfolgreich gespeichert!"
 
+#Route für scrapen von der Schüür
 @main.route("/scrape-schuur")
 def scrape_und_speichere_4():
     anzahl = scrapeundSpeichere(schuur)
     return f"{anzahl} Events erfolgreich gespeichert!"
 
+#Route für scrapen vom Bar59
 @main.route("/scrape-bar59")
 def scrape_und_speichere_5():
     anzahl = scrapeundSpeichere(bar59)
     return f"{anzahl} Events erfolgreich gespeichert!"
 
+#Route für scrapen vom Rok
 @main.route("/scrape-rok")
 def scrape_und_speichere_6():
     anzahl = scrapeundSpeichere(rok)
     return f"{anzahl} Events erfolgreich gespeichert!"
 
+#Route für scrapen vom Sudpol
 @main.route("/scrape-sudpol")
 def scrape_und_speichere_7():
     anzahl = scrapeundSpeichere(sudpol)
     return f"{anzahl} Events erfolgreich gespeichert!"
 
+#Route für scrapen vom Sedel
 @main.route("/scrape-sedel")
 def scrape_und_speichere_8():
     anzahl = scrapeundSpeichere(sedel)
     return f"{anzahl} Events erfolgreich gespeichert!"
 
+#Route für scrapen vom Schwarzenschaf
 @main.route("/scrape-schwarzeschaf")
 def scrape_und_speichere_9():
     anzahl = scrapeundSpeichere(schwarzeschaf)
     return f"{anzahl} Events erfolgreich gespeichert!"
 
+#Route fürs scrapen aller Clubseiten
 @main.route("/scrape-all")
 def scrapeall():
     anzahl = scrape_all()
     return f"{anzahl} Events erfolgreich gespeichert!"
 
+#Route für die Homepage
 @main.route("/")
 def show_events():
     heute_date, heute_time = today()
-    # filtere Event nach aktualität (Heute und Zunkunft)
+    # filtere Event nach aktualität
     events = Event.query.order_by(Event.date, Event.Starttime)\
         .filter((Event.date > heute_date) | ((Event.date == heute_date) & (Event.Starttime >= heute_time))).all()
+    #DB Inhalt in Dictionarys um schreiben für die Darstellung auf der Webseite.
     if events:
         ausgabe = []
         for event in events:
@@ -89,18 +101,23 @@ def show_events():
         return render_template("index1.html", events=ausgabe)
     else:
         return {"Konnten Keine Events geladen werden."}
-@main.route("/programm/<int:event_id>") #ChatGPT
+
+#Route für die dynamischen Detailseiten
+@main.route("/programm/<int:event_id>") #Zeile ist von ChatGPT
 def event_details(event_id):
-    event = Event.query.get_or_404(event_id) #ChatGPT
+    event = Event.query.get_or_404(event_id) #Zeile ist von ChatGPT
     return render_template("details.html", event=event)
+#Route für die Nebenseite mit einer Suchfunktion 
 @main.route("/programm")
 def programm():
     return render_template("programm.html")
+#Route, welche die Sucheinträge verarbeitet
 @main.route("/search")
 def search():
     heute_date, heute_time = today()
     q = request.args.get("q")
     print(q)
+    #Prüfe, ob q eine Gemeinsamkeit mit DB Einträgen hat. 
     if q:
         resultate = Event.query.order_by(Event.date, Event.Starttime)\
             .filter((Event.date > heute_date) | ((Event.date == heute_date) & (Event.Starttime >= heute_time)))\
@@ -108,9 +125,7 @@ def search():
     else:
         resultate = []
     return render_template("suchresultate.html", resultate = resultate)
+#Route für eine Nebenseite 
 @main.route("/about")
 def about():
     return render_template("about.html")
-@main.route("/clubs")
-def clubs():
-    return render_template("clubs.html")
