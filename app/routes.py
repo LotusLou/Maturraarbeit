@@ -10,7 +10,7 @@ from scraping.rok_scraper import rok
 from scraping.südpol_scraper import sudpol
 from scraping.sedel_scraper import sedel
 from scraping.schwarzeschaf_scraper import schwarzeschaf
-from app.helper.db_helper import scrapeundSpeichere
+from app.helper.db_helper import scrapeundSpeichere, clean
 from app.helper.scrape_helper import scrape_all
 
 main = Blueprint('main', __name__)
@@ -89,14 +89,14 @@ def show_events():
             ausgabe.append({
                 "id": event.id,
                 "title": event.title,
-                "date": str(event.date) if event.date else "",
-                "Starttime": str(event.Starttime) if event.Starttime else "",
-                "Endtime": str(event.Endtime) if event.Endtime else "Keine Angaben",
-                "img": str(event.img) if event.img else "",
-                "preis" : str(event.preis) if event.preis else "Keine Angaben",
-                "link" : str(event.link) if event.link else "",
-                "club" : str(event.club) if event.club else "",
-                "text" : str(event.text) if event.text else "Kein Textbeschreib gefunden"
+                "date": str(event.date),
+                "Starttime": str(event.Starttime),
+                "Endtime": clean(event.Endtime, "Keine Angaben"),
+                "img": clean(event.img, "https://i.pinimg.com/736x/dc/47/23/dc4723738dd4f691a290a1625b8ca4c9.jpg") ,
+                "preis" : clean((event.preis), "Preis auf Anfrage"),
+                "link" : event.link,
+                "club" : str(event.club),
+                "text" : clean(event.text, "Kein Textbeschreib gefunden")
                 })
         return render_template("index1.html", events=ausgabe)
     else:
@@ -106,7 +106,19 @@ def show_events():
 @main.route("/programm/<int:event_id>") #Zeile ist von ChatGPT
 def event_details(event_id):
     event = Event.query.get_or_404(event_id) #Zeile ist von ChatGPT
-    return render_template("details.html", event=event)
+    ausgabe = {
+                "id": event.id,
+                "title": event.title,
+                "date": str(event.date),
+                "Starttime": str(event.Starttime),
+                "Endtime": clean(event.Endtime, "Keine Angaben"),
+                "img": clean(event.img, "https://i.pinimg.com/736x/dc/47/23/dc4723738dd4f691a290a1625b8ca4c9.jpg") ,
+                "preis" : clean((event.preis), "Keine Angabe"),
+                "link" : event.link,
+                "club" : str(event.club),
+                "text" : clean(event.text, "Kein Textbeschreib vorhanden")
+                }
+    return render_template("details.html", event=ausgabe)
 #Route für die Nebenseite mit einer Suchfunktion 
 @main.route("/programm")
 def programm():

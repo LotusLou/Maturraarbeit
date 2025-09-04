@@ -16,3 +16,20 @@ def scrapeundSpeichere(Club):
     
     db.session.commit()
     return i
+
+def clean(x, standart):
+    # Prüft auf None-Werte
+    if x is None:
+        return standart
+    
+    # Wandelt in String um und entfernt Leerzeichen
+    s = str(x).strip()
+    
+    # Prüft auf leere Strings
+    if s == "":
+        return standart
+    
+    # Prüft auf "none" Werte (case-insensitive)
+    if s.lower() == "none":
+        return standart
+    return s
