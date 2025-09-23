@@ -1,4 +1,4 @@
-# Produkt meiner Maturraarbeit - Eventplattform Luzern
+# Produkt meiner Maturaarbeit - Eventplattform Luzern
 
 Dieser Ordner enthält den Code und Dateien, um meine Webseite lokal starten zu können.
 
@@ -13,7 +13,7 @@ Dieser Ordner enthält den Code und Dateien, um meine Webseite lokal starten zu 
 ## 2. Notwendige Python-Pakete installieren
 
 Im Hauptordner liegt eine `requirements.txt` bei.  
-Bitte in der im Terminal ausführen:
+Bitte im Terminal ausführen:
 
 ```bash
 pip install -r requirements.txt
@@ -27,12 +27,12 @@ ChromeDriver ist bereits im Ordner enthalten (chromedriver.exe)
 
 ## 4. Starten des Programms
 
-Um den localen Server zu starten müssen sie im Terminal folgender Befehl eingeben:
+Um den lokalen Server zu starten müssen Sie im Terminal folgenden Befehl eingeben:
 ```bash
 python -m run 
 ```
 
-In /app/routes.py sehen sie alle Routen die mein Produkt bietet. Diese können sie in einem beliebigen Browser als URL eintippen: 
+In /app/routes.py sehen Sie alle Routen die mein Produkt bietet. Diese können Sie in einem beliebigen Browser als URL eintippen: 
 - localhost:5000/beliebigeRoute
 Beispiele:
 - localhost:5000/ => Homepage
@@ -57,9 +57,9 @@ Beispiele:
 
 - chromedriver.exe – ChromeDriver
 
-- instance/project.db – SQLite-Datenbank (Bewusst nicht leer aber nicht akutell, da ab dem 22.09.25 nicht mehr gescrapt wurde.)
+- instance/project.db – SQLite-Datenbank (letztes Update: 23.09.25)
 ---
 
-## 6. Kondakt 
+## 6. Kontakt 
 
 Bei Fragen oder Unklarheiten, zur bedienungen meines Produktes, bitte mich kontaktieren. 
