@@ -73,7 +73,7 @@ def scrape_und_speichere_9():
 @main.route("/scrape-all")
 def scrapeall():
     anzahl = scrape_all()
-    return f"{anzahl} Events erfolgreich gespeichert!"
+    return f" Events erfolgreich gespeichert!"
 
 #Route für die Homepage
 @main.route("/")

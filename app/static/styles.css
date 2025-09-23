@@ -235,3 +235,8 @@ h3{
 .details a:hover{
     color: rgb(59, 59, 59);
 }
+.karte p {
+    text-align: justify;
+    text-align-last: left;
+    font-size: 20px;
+}
