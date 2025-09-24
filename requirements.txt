@@ -1,4 +1,0 @@
-pip install selenium
-pip install flask
-pip install sqlalchemy
-pip install webdriver-manager
