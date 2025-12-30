@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import time 
 from datetime import datetime
-
+from selenium.common.exceptions import NoSuchElementException
 # Das ist die Basis-Klasse für alle Scraper, wie ein Bauplan für alle anderen Scraper
 class baseScraper: 
 
@@ -28,7 +28,6 @@ class baseScraper:
             raise RuntimeError("WebDriver funktioniert nicht.")
         # Öffnet die gewünschte Website
         self.driver.get(self.url)
-        time.sleep(3)
     # Diese Funktion sucht nach bestimmten Elementen auf der Website
     def findElement(self, Xpath):
         # Wartet maximal 10 Sekunden, bis die Elemente auf der Seite erscheinen (ChatGPT)
@@ -51,6 +50,21 @@ class baseScraper:
                     href = base_url + href
                 Links.append(href)
         return Links  # Gibt alle gesammelten Links zurück
+    def findCards (self, Container_Xpath):
+        cards = self.driver.find_elements(By.XPATH, Container_Xpath)
+        return cards
+    def get_text(self, relativeXpath, root):
+        default = "Kein Event"
+        try: 
+            return self.root.find_element(By.XPATH, relativeXpath).text.strip()
+        except NoSuchElementException:
+            return default
+    def get_attr(self, relativeXpath, root, attr):
+        default = "Kein Event"
+        try: 
+            return root.find_element(By.XPATH, relativeXpath).get_attribute() 
+        except NoSuchElementException:
+            return default
     # Diese Funktion wird von den spezifischen Scrapern überschrieben
     def scraper ():
         pass  # Hier passiert nichts, bis die individuellen Scraper Code einsetzten 
